@@ -55,7 +55,25 @@
   }
 
   /*CARD*/
+*,body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
 #card{
     display: none;
+    background: teal;
+    margin: auto;
+    width: 280px;
+    min-height: 400px;
+    max-height: 800px;
+    padding: 1em;
 }
-  
+main{
+    height: 100vh;
+    background: chocolate;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
