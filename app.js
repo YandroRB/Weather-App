@@ -1,13 +1,42 @@
 //Variables
 const data={};
 const weather={};
+const fecha=new Date();
 
 //Utilizacion del DOM Y BOM
 window.onload= async function(){
    await getLocation(data);
    await getWeatherLocation(data,weather);
    console.log(weather)
+   const view={
+       ubicacion:weather.name,
+       status:`http://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`,
+       temperature:weather.main.temp,
+       feel_like:weather.main.feels_like,
+       tiempo:getTiempo(fecha.getHours()),
+       dia:getDayName(fecha.getDay()),
+       fecha:fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})
+   }
+   loaderData(view)
+   clearLoader();
 }
+
+function loaderData(data){
+    Object.keys(data).forEach((dat)=>{
+        if(dat=='status'){
+            document.getElementById(dat).src=data[dat]
+        }
+        document.getElementById(dat).textContent=data[dat]
+    })
+
+}
+function clearLoader(){
+    document.getElementById('loader').style.display='none';
+    document.getElementById('card').style.display='block';
+
+}
+
+
 //Funciones
 //Obtiene la localizacion del usuario
 async function getLocation(data){
@@ -31,4 +60,22 @@ async function getWeatherLocation(data,weather){
             weather[key]=jsonResponse[key]
         }
     })
+}
+function getDayName(day){
+    const names=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+    return names[day]
+}
+function getTiempo(hora){
+    if(hora>6&&hora<12){
+        return 'Buenos días';
+    }
+    else if(hora>11 && hora<19){
+        return 'Buenas tardes';
+    }
+    else if(hora>18 &&hora<=23 || hora == 0){
+        return 'Buenas noches';
+    }
+    else{
+        return 'Buenas madrugadas';
+    }
 }
