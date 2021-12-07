@@ -55,7 +55,7 @@ async function getLocation(data){
 async function getWeatherLocation(data,weather){
     const latLon=data.loc;
     const API_KEY='5cf355d1310f419a91c52809210712';
-    await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latLon}&aqi=yes`)
+    await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latLon}&aqi=yes`)
     .then((response)=>response.json())
     .then((jsonResponse)=>{
         for(let key in jsonResponse){
