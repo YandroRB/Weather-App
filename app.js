@@ -7,18 +7,20 @@ const fecha=new Date();
 window.onload= async function(){
    await getLocation(data);
    await getWeatherLocation(data,weather);
+   console.log(data)
    console.log(weather)
-   const view={
-       ubicacion:weather.name,
-       status:`http://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`,
-       temperature:weather.main.temp,
-       feel_like:weather.main.feels_like,
+   const {current,location}=weather
+    const view={
+       ubicacion:data.city,
+       status:current.condition.icon.replace('64x64','128x128'),
+       temperature:current.temp_c,
+       feel_like:current.feelslike_c,
        tiempo:getTiempo(fecha.getHours()),
        dia:getDayName(fecha.getDay()),
        fecha:fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})
    }
    loaderData(view)
-   clearLoader();
+   clearLoader(); 
 }
 
 function loaderData(data){
@@ -51,9 +53,9 @@ async function getLocation(data){
 }
 //Obtiene el clima de la zona
 async function getWeatherLocation(data,weather){
-    const latLon=data.loc.split(',');
-    const API_KEY='10569e70d6aa20fb2a1f7701c81b4865';
-    await fetch(`https://api.openweathermap.org/data/2.5/weather?lang=es&units=metric&lat=${latLon[0]}&lon=${latLon[1]}&appid=${API_KEY}`)
+    const latLon=data.loc;
+    const API_KEY='5cf355d1310f419a91c52809210712';
+    await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latLon}&aqi=yes`)
     .then((response)=>response.json())
     .then((jsonResponse)=>{
         for(let key in jsonResponse){
