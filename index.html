@@ -6,29 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    
 </head>
+<header>
+    <h1>Clima</h1>
+    <div id="buscar">
+        <input type="text" id="ciudad" placeholder="Ingrese una ciudad">
+        <ul id="resultados"></ul>
+        <button id="btn-buscar">Buscar</button>
+    </div>
+</header>
 <body>
     <main>
-        <h1>Clima</h1>
+
+
         <div id="loader" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
         <div id="card" class="card">
             <div class="card-header">
-                <p id="ubicacion">Test text</p>
+                <p id="ubicacion"></p>
+                <p id="dia"></p>
+                <p id="fecha"></p>
             </div>
+
             <div class="card-main">
                 <div class="cmain-img">
                     <img src="" alt="" id="status">
                 </div>
                 <div class="cmain-temperature">
-                    <p id="temperature">Temperature</p>
-                    <p id="feel_like">Feel Like </p>
+                    <p id="temperature">Temperatura: </p>
+                    <p id="feel_like">Temperatura ambiente: </p>
                 </div>
             </div>
             <div class="card-footer">
-                <p id="tiempo">Buenos dias</p>
-                <p id="dia"></p>
-                <p id="fecha"></p>
+                <div class="ambient">
+                    <p id="wind">Viento: </p>
+                    <p id="humidicity">Humedad: </p>
+                    <p id="precipitacion">Precipitacion: </p>
+                </div>
+
             </div>
         </div>
     </main>
