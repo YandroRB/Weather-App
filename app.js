@@ -7,22 +7,19 @@ const fecha=new Date();
 window.onload= async function(){
    await getLocation(data);
    await getWeatherLocation(data.loc,weather);
-   console.log(data)
-   console.log(weather)
    const {current,location}=weather
     const view={
        ubicacion:`${location.region}/${location.name}`,
        status:current.condition.icon.replace('64x64','128x128'),
-       temperature:`${current.temp_c}°C`,
-       feel_like:`${current.feelslike_c}°C`,
-       wind:`${current.wind_dir} ${current.wind_kph}Km/h`,
-       humidicity:`${current.humidity}%`,
-       precipitacion:`${current.precip_mm}mm`,
+       temperature:`Temperatura: ${current.temp_c}°C`,
+       feel_like:`Temperatura ambiente: ${current.feelslike_c}°C`,
+       wind:`Viento: ${current.wind_dir} ${current.wind_kph}Km/h`,
+       humidicity:`Humedad: ${current.humidity}%`,
+       precipitacion:`Precipitacion: ${current.precip_mm}mm`,
        dia:getDayName(fecha.getDay()),
        fecha:fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})
    }
    loaderData(view)
-   clearLoader(); 
 }
 const ciudad=document.getElementById('ciudad');
 const resultElement=document.getElementById('resultados');
@@ -58,6 +55,7 @@ function showResult(resultados,contenedor){
 }
 
 async function mostrar(event){
+    showLoader();
     const weatherData={}
     const address=event.target.parentNode.id
     await getWeatherLocation(address,weatherData)
@@ -65,30 +63,35 @@ async function mostrar(event){
     const view={
         ubicacion:`${location.region}/${location.name}`,
         status:current.condition.icon.replace('64x64','128x128'),
-        temperature:`${current.temp_c}°C`,
-        feel_like:`${current.feelslike_c}°C`,
-        wind:`${current.wind_dir} ${current.wind_kph}Km/h`,
-        humidicity:`${current.humidity}%`,
-        precipitacion:`${current.precip_mm}mm`,
+        temperature:`Temperatura: ${current.temp_c}°C`,
+        feel_like:`Temperatura ambiente: ${current.feelslike_c}°C`,
+        wind:`Viento: ${current.wind_dir} ${current.wind_kph}Km/h`,
+        humidicity:`Humedad: ${current.humidity}%`,
+        precipitacion:`Precipitacion: ${current.precip_mm}mm`,
         dia:getDayName(fecha.getDay()),
         fecha:fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})
     }
-    console.log(view)
+    
     loaderData(view)
 }
 
 function loaderData(data){
     Object.keys(data).forEach((dat)=>{
         if(dat=='status'){
-            document.getElementById(dat).src=data[dat]
+            document.getElementById(dat).src=data[dat];
         }
-        document.getElementById(dat).textContent+=data[dat]
+        document.getElementById(dat).textContent=data[dat];
     })
+    clearLoader();
 
+}
+function showLoader(){
+    document.getElementById('loader').style.display='inline-block';
+    document.getElementById('card').style.display='none';
 }
 function clearLoader(){
     document.getElementById('loader').style.display='none';
-    document.getElementById('card').style.display='block';
+    document.getElementById('card').style.display='inline-block';
 
 }
 

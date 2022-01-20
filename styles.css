@@ -53,28 +53,52 @@
       transform: translate(24px, 0);
     }
   }
+/*variables*/
+  :root{
+    --night:url(images/stars.png),linear-gradient(to top, #283E51, #0A2342);
+    --day:url(images/clounds.png),linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    --rain:url(images/rain-clound.png),linear-gradient(to bottom, #202020, #111119);
+    
+  }
 
   /*CARD*/
-*,body{
+*{
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
 }
-#card{
-    display: none;
-    background: teal;
-    margin: auto;
-    width: 280px;
-    min-height: 400px;
-    max-height: 800px;
-    padding: 1em;
+body{
+  background-image:var(--day);
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-attachment: fixed;
 }
-main{
-    height: 100vh;
-    background: chocolate;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-} 
+header{
+  background: rgba(255, 255, 255, 0.40);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.3px);
+  -webkit-backdrop-filter: blur(6.3px);
+  height: 135px;
+  padding: 20px;
+}
+header h1{
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom:10px;
+}
+#buscar{
+  width: 100%;
+}
+#buscar ul,#buscar input{
+  width: inherit;
+  max-width: 429px;
+  padding:0px 7px 0px 7px;
+  list-style: none;
+}
+#resultados a{
+  text-decoration: none;
+}
+#buscar input{
+  height: 45px;
 
+}
