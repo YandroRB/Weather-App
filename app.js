@@ -5,7 +5,7 @@ const fecha=new Date();
 
 //Utilizacion del DOM Y BOM
 window.onload= async function(){
-   await getLocation(data);
+    await getLocation(data);
    await getWeatherLocation(data.loc,weather);
    const {current,location}=weather
     const view={
@@ -20,7 +20,7 @@ window.onload= async function(){
        fecha:`${getDayName(fecha.getDay())} ${fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})}`,
        tiempo:current.is_day
    }
-   loaderData(view)
+   loaderData(view) 
 }
 const ciudad=document.getElementById('ciudad');
 const resultElement=document.getElementById('resultados');
@@ -39,7 +39,7 @@ ciudad.addEventListener('focus',(e)=>{
 ciudad.addEventListener('blur',(e)=>{
     setTimeout(()=>{
         resultados.style.display='none'
-    },50);
+    },200);
 })
 
 
