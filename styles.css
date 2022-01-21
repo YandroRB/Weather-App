@@ -159,3 +159,8 @@ header h1{
 #buscar input:focus{
   outline: none;
 }
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: lightblue;
+  }
+}
