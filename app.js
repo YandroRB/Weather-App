@@ -9,15 +9,16 @@ window.onload= async function(){
    await getWeatherLocation(data.loc,weather);
    const {current,location}=weather
     const view={
-       ubicacion:`${location.region}/${location.name}`,
+       ubicacion:`${location.region==''?location.country:location.region}/${location.name}`,
        status:current.condition.icon.replace('64x64','128x128'),
-       temperature:`Temperatura: ${current.temp_c}°C`,
-       feel_like:`Temperatura ambiente: ${current.feelslike_c}°C`,
-       wind:`Viento: ${current.wind_dir} ${current.wind_kph}Km/h`,
-       humidicity:`Humedad: ${current.humidity}%`,
-       precipitacion:`Precipitacion: ${current.precip_mm}mm`,
-       dia:getDayName(fecha.getDay()),
-       fecha:fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})
+       footer_img:current.condition.text,
+       temperature:`${current.temp_c}°C`,
+       feel_like:`${current.feelslike_c}°C`,
+       wind:`${current.wind_dir} ${current.wind_kph}Km/h`,
+       humidicity:`${current.humidity}%`,
+       precipitacion:`${current.precip_mm}mm`,
+       fecha:`${getDayName(fecha.getDay())} ${fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})}`,
+       tiempo:current.is_day
    }
    loaderData(view)
 }
@@ -31,6 +32,14 @@ ciudad.addEventListener('keyup',async (e)=>{
         await searchWeather(city,resultados);
         showResult(resultados,resultElement);
     }
+})
+ciudad.addEventListener('focus',(e)=>{
+    resultados.style.display='inline-block'
+})
+ciudad.addEventListener('blur',(e)=>{
+    setTimeout(()=>{
+        resultados.style.display='none'
+    },50);
 })
 
 
@@ -53,7 +62,10 @@ function showResult(resultados,contenedor){
 
     })
 }
+/*function loadBackground(dato){
+    
 
+}*/
 async function mostrar(event){
     showLoader();
     const weatherData={}
@@ -61,18 +73,20 @@ async function mostrar(event){
     await getWeatherLocation(address,weatherData)
     const {current,location}=weatherData
     const view={
-        ubicacion:`${location.region}/${location.name}`,
+        ubicacion:`${location.region==''?location.country:location.region}/${location.name}`,
         status:current.condition.icon.replace('64x64','128x128'),
-        temperature:`Temperatura: ${current.temp_c}°C`,
-        feel_like:`Temperatura ambiente: ${current.feelslike_c}°C`,
-        wind:`Viento: ${current.wind_dir} ${current.wind_kph}Km/h`,
-        humidicity:`Humedad: ${current.humidity}%`,
-        precipitacion:`Precipitacion: ${current.precip_mm}mm`,
-        dia:getDayName(fecha.getDay()),
-        fecha:fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})
+        footer_img:current.condition.text,
+        temperature:`${current.temp_c}°C`,
+        feel_like:`${current.feelslike_c}°C`,
+        wind:`${current.wind_dir} ${current.wind_kph}Km/h`,
+        humidicity:`${current.humidity}%`,
+        precipitacion:`${current.precip_mm}mm`,
+        fecha:`${getDayName(fecha.getDay())} ${fecha.toLocaleDateString('es-ES',{year:"numeric",month:"long",day:"numeric"})}`,
+        tiempo:current.is_day
     }
     
     loaderData(view)
+    console.log(weatherData)
 }
 
 function loaderData(data){
@@ -80,7 +94,13 @@ function loaderData(data){
         if(dat=='status'){
             document.getElementById(dat).src=data[dat];
         }
-        document.getElementById(dat).textContent=data[dat];
+        else if(dat=='tiempo'){
+            data[dat]==0?document.body.style.backgroundImage='var(--night)':document.body.style.backgroundImage='var(--day)'
+        }
+        else{
+            document.getElementById(dat).textContent=data[dat];
+        }
+        
     })
     clearLoader();
 
@@ -91,7 +111,7 @@ function showLoader(){
 }
 function clearLoader(){
     document.getElementById('loader').style.display='none';
-    document.getElementById('card').style.display='inline-block';
+    document.getElementById('card').style.display='block';
 
 }
 
@@ -100,7 +120,7 @@ function clearLoader(){
 //Funcion para buscar el clima de una ciudad
 async function searchWeather(city,resultados){
     const API_KEY='5cf355d1310f419a91c52809210712';
-    const url=`https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${city}`;
+    const url=`https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${city}&lang=es`;
     await fetch(url)
     .then(res=>res.json())
     .then(data=>{
@@ -125,7 +145,7 @@ async function getLocation(data){
 //Obtiene el clima de la zona
 async function getWeatherLocation(data,weather){
     const API_KEY='5cf355d1310f419a91c52809210712';
-    await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${data}&aqi=yes`)
+    await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${data}&aqi=yes&lang=es`)
     .then((response)=>response.json())
     .then((jsonResponse)=>{
         for(let key in jsonResponse){

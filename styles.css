@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+
 .lds-ellipsis {
     display: inline-block;
     position: relative;
@@ -60,12 +62,54 @@
     --rain:url(images/rain-clound.png),linear-gradient(to bottom, #202020, #111119);
     
   }
-
+main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
   /*CARD*/
+#card{
+  display: none;
+  width: 90vw;
+  line-height: 1.6;
+  background: rgba(141, 150, 152, 0.40);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.3px);
+  -webkit-backdrop-filter: blur(6.3px);
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  z-index: -1;
+} 
+#ubicacion{
+  text-align: end;
+  font-size: x-large;
+  font-weight: bold;
+}
+.cmain-temperature p,.ambient p{
+  display: grid;
+  grid-template-columns:1fr 100px  
+}
+.cmain-img{
+  text-align: center;
+  margin-bottom:1em ;
+}
+.cmain-img img{
+  display: block;
+  margin: auto;
+}
+.card-footer{
+  padding-top: 1em;
+}
 *{
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+#footer_img{
+  font-weight:600;
 }
 body{
   background-image:var(--day);
@@ -74,7 +118,7 @@ body{
   background-attachment: fixed;
 }
 header{
-  background: rgba(255, 255, 255, 0.40);
+  background: rgba(141, 150, 152, 0.40);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.3px);
   -webkit-backdrop-filter: blur(6.3px);
@@ -97,8 +141,21 @@ header h1{
 }
 #resultados a{
   text-decoration: none;
+  color: black;
+}
+#resultados li{
+  padding: 3px 0px;
+}
+#resultados{
+  background: whitesmoke;
+  color:black;
 }
 #buscar input{
-  height: 45px;
-
+  padding:15px 7px;
+  border: 2px solid #cccccc;
+  border-radius: 5px;
+  text-shadow: 0px 0px 2px rgba(66,66,66,.75);
+}
+#buscar input:focus{
+  outline: none;
 }
